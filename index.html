@@ -3,13 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>Document</title>
-    <style>
-        .container { width: 200px; height: 400px; background-color: rgba(0, 0, 0, 0.4); position: relative; overflow:hidden; }
-        .move-box { width: 200px;  background-color: crimson; transition: top 0.5s cubic-bezier(0.42, 0, 0.38, 1.0); position: absolute; top: 0; left: 0; }
-        .move-box ul { padding: 0; margin: 0; }
-        .move-box li { width: 100%; height: 80px; border-bottom: 1px solid #fff; line-height: 80px; text-align: center; list-style: none; }
-    </style>
+    
 </head>
 <body>
     <div class="container">
@@ -25,67 +21,6 @@
         </div>
     </div>
 
-    <script>
-        // move-box move
-        const box = document.querySelector('.move-box');
-        let startY = 0;
-        let isUp = true;
-        let threshold = 0;
-        let isClicked = false;
-
-        box.addEventListener('mousedown', (e) => {
-            isClicked = true;
-        
-            // drag direction
-            startY = e.pageY;
-        })
-
-        box.addEventListener('mouseup', (e) => {
-            e.preventDefault();
-            isClicked = false;
-            console.log('mouse off!');
-        })
-        box.addEventListener('mouseleave', (e) => {
-            e.preventDefault();
-            isClicked = false;
-            console.log('mouse off!');
-        })
-
-        box.addEventListener('mousemove', (e) => {
-            e.preventDefault();
-            let moveY = e.pageY;
-            
-            // distinguish drag direction
-            if(isClicked) {
-                if(startY < moveY) { isUp = false; }
-                else { isUp = true; }
-                startY = moveY;
-                threshold += startY;
-
-                if(threshold >= 80) {
-                    moveElem(isUp);
-                    threshold = 0;
-                    return;
-                }
-            }
-            
-        })
-
-        function moveElem(direction){
-            let offset = 0;
-            if(direction) { // is Up  
-                offset = (box.offsetTop - 80) + 'px';
-            } else { // is Down
-                offset = (box.offsetTop + 80) + 'px';
-            }
-            box.style.top = offset;
-        }
-
-        init();
-
-        function init(){
-            console.log(startY);
-        }
-    </script>
+    <script src="index.js"></script>
 </body>
 </html>
