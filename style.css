@@ -1,4 +1,4 @@
-.container { width: 200px; height: 400px; background-color: rgba(0, 0, 0, 0.4); position: relative; overflow:hidden; }
+.container { width: 200px; height: 400px; background-color: rgba(0, 0, 0, 0.4); position: relative; overflow:hidden; margin: 200px; }
 .move-box { width: 200px;  background-color: crimson; transition: top 0.5s cubic-bezier(0.42, 0, 0.38, 1.0); position: absolute; top: 0; left: 0; }
 .move-box ul { padding: 0; margin: 0; }
-.move-box li { width: 100%; height: 80px; border-bottom: 1px solid #fff; line-height: 80px; text-align: center; list-style: none; }
+.move-box li { width: 100%; height: 80px; border-bottom: 1px solid #fff; line-height: 80px; text-align: center; list-style: none; box-sizing: border-box; -ms-user-select: none; -moz-user-select: -moz-none; -webkit-user-select: none; -khtml-user-select: none; user-select:none;}
