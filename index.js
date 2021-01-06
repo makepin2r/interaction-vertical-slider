@@ -4,7 +4,6 @@ const box = document.querySelector('.move-box');
 const slides = document.querySelectorAll('.move-box li');
 const container = document.querySelector('.container');
 let startY = 0;
-let isUp = true;
 let threshold = 0;
 let isClicked = false;
 let currentIdx = 0;
@@ -16,37 +15,25 @@ container.addEventListener('mousedown', (e) => {
     startY = e.pageY;
 })
 
-container.addEventListener('mouseup', (e) => {
-    e.preventDefault();
-    moveSlide(currentIdx);
-    threshold = 0;
-    isClicked = false;
-})
-container.addEventListener('mouseleave', (e) => {
-    e.preventDefault();
-    moveSlide(currentIdx);
-    threshold = 0;
-    isClicked = false;
-})
+container.addEventListener('mouseup', (e) => mouseOff(e));
+container.addEventListener('mouseleave', (e) => mouseOff(e));
 
 container.addEventListener('mousemove', (e) => {
     e.preventDefault();
     let moveY = e.pageY;
-    // distinguish drag direction
+    
     if(isClicked) {
-        if(startY < moveY) { isUp = false; }
-        else { isUp = true; }
         threshold += (moveY - startY);
         startY = moveY;
 
-        if(threshold >= 80 && (currentIdx < slides.length - 1)){
-           currentIdx++; 
-           threshold = 0;
-           console.log('currentIdx: ' + currentIdx);
-        } else if (threshold <= -80 && currentIdx > 0) {
+        if(threshold <= -80 && (currentIdx < (slides.length - container.offsetHeight / slideHeight) )){
+            currentIdx++; 
+            resetDrag();
+            //console.log('currentIdx: ' + currentIdx);
+        } else if (threshold >= 80 && currentIdx > 0) {
             currentIdx--;
-            threshold = 0;
-            console.log('currentIdx: ' + currentIdx);
+            resetDrag();
+            //console.log('currentIdx: ' + currentIdx);
         }
     }
     
@@ -58,18 +45,13 @@ function moveSlide(index){
     box.style.top = offset;
 }
 
-function adjustOffset() {
-    let slide = 0;
-    if((box.offsetTop % slideHeight) !== 0) {
-        slide = box.offsetTop / slideHeight;
-        let offset = (slide * slideHeight) + 'px';
-        box.style.top = offset;
-        console.log('adjust:' + box.style.top);
-    }
+function resetDrag(){
+    threshold = 0;
+    isClicked = false; // 한 번 드래그할 때 한 슬라이드씩만
 }
 
-init();
-
-function init(){
-    console.log(startY);
+function mouseOff(e){
+    e.preventDefault();
+    moveSlide(currentIdx);
+    resetDrag();
 }
